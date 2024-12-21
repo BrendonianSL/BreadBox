@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  display: flex;
+  position: relative;
+  max-width: 100vw;
+  overflow: visible;
+}
+
+
+body {
+  height: 100%;
+}
+
+@media only screen and (min-width: 641px) and (max-width: 1024px) {
+  #root {
+    flex-direction: column;
+  }
+}
