@@ -54,6 +54,7 @@ export default function Article() {
                     Ellipse bullet subtract main scale select community line bullet.
                 </p>
             </div>
+            <ReviewVerdict />
         </article>
     )
 }

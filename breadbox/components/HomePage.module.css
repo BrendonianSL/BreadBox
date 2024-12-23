@@ -1,0 +1,76 @@
+#homePageContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+#heroSection {
+    display: flex;
+    position: relative; /* Required For Overlay */
+    width: 100%;
+}
+
+#heroSection:hover #test {
+    max-height: 12.5rem; /* 180px */
+
+}
+
+#heroSection:hover #heroImage {
+    opacity: .5;
+}
+
+#heroImage {
+    object-fit: cover;
+    width: 100%;
+    max-height: 37.5rem; /* 600px */
+    border-radius: .5rem; /* 8px */
+    opacity: 1;
+    transition: opacity .10s linear;
+}
+
+#heroOverlay {
+    width: 100%;
+    position: absolute;
+    padding: 2rem;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+    border-radius: 0rem 0rem .5rem .5rem;
+}
+
+#heroOverlay summary {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+#test {
+    display: block;
+    overflow: hidden;
+    max-height: 0; /* Allows for transition-based expansion */
+    overflow: hidden; /* Ensures no content is visible when collapsed */
+    transition: max-height .10s linear; /* Smoothly transitions height */
+}
+
+
+@media only screen and (min-width: 1281px) {
+    #homePageContainer {
+        max-width: 75rem; /* 1200px */
+        gap: 5.125rem; /* 82px */
+    }
+}
+
+@media only screen and (min-width: 1025px) and (max-width: 1280px) {
+    #homePageContainer {
+        max-width: 1000px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    #homePageContainer {
+        max-width: 928px;
+    }
+}

@@ -4,10 +4,12 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Header from '../components/Header';
 import ContentSpace from '../components/ContentSpace';
+import { useEffect } from 'react';
 function App() {
 
   return (
     <>
+      <Header />
       <ContentSpace />
     </>
   )
