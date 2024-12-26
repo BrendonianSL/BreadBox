@@ -1,5 +1,7 @@
 #homePageContainer {
     display: flex;
+    gap: 2rem;
+    flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     width: 100%;
@@ -55,6 +57,37 @@
     transition: max-height .10s linear; /* Smoothly transitions height */
 }
 
+.content-carousel_container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    height: auto;
+    width: 100%;
+}
+
+.content-carousel {
+    display: flex;
+    gap: 1.5rem;
+    width: 100%;
+    overflow-x: auto; /* Horizontal scrolling only */
+    scroll-behavior: smooth; /* Smooth scrolling */
+    padding-bottom: 1rem; /* Optional: Adds space below content for better usability */
+}
+
+.content-carousel_card {
+    flex-shrink: 0; /* Prevents cards from shrinking */
+    width: 17.625rem; /* 282 px */
+}
+
+.content-carousel_card img {
+    width: 100%; /* Fills Container */
+    border-radius: .5rem; /* 8px Radius */
+}
+
+.content-carousel_card span {
+    color: #A259FF;
+}
+
 
 @media only screen and (min-width: 1281px) {
     #homePageContainer {
@@ -72,5 +105,13 @@
 @media only screen and (max-width: 767px) {
     #homePageContainer {
         max-width: 928px;
+    }
+
+    #heroImage, #heroOverlay {
+        border-radius: 0rem;
+    }
+
+    .content-carousel_container {
+        padding: 0rem 1.5rem;
     }
 }
