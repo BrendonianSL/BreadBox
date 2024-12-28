@@ -6,7 +6,7 @@ import HomePage from './HomePage';
 export default function ContentSpace() {
     return (
         <section id={styles.contentSpace}>
-            <Article />
+            <HomePage />
         </section>
     )
 }
