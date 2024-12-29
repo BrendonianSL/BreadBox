@@ -26,6 +26,7 @@ app.get('/', async (req, res) => {
             reviews.title,
             reviews.subtitle,
             reviews.content,
+            reviews.verdict_description,
             authors.name AS author_name,
             review_verdicts.verdict
             FROM reviews

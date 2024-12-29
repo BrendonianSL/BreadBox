@@ -13,7 +13,7 @@ export default function Article() {
         async function fetchArticleInformation() {
             try {
                 //Creates A Variable To Hold The Response.
-                const response = await fetch('http://localhost:3000/');
+                const response = await fetch(`http://localhost:3000${window.location.pathname}`);
 
                 //Checks If The Response Is Ok!
                 if (!response.ok) {
@@ -81,7 +81,7 @@ export default function Article() {
                 })
                 }
                 </div>
-                <ReviewVerdict verdict={articleInformation.verdict} description={articleInformation.description} />
+                <ReviewVerdict verdict={articleInformation.verdict} description={articleInformation.verdict_description} />
         </article>
     )
 } 
