@@ -5,6 +5,7 @@ import './App.css'
 import Header from '../components/Header';
 import ContentSpace from '../components/ContentSpace';
 import { useEffect } from 'react';
+import SidebarMenu from '../components/SidebarMenu';
 function App() {
 
   return (

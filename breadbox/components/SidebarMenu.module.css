@@ -1,0 +1,87 @@
+/* Sidebar default state */
+.sidebarMenu {
+    position: fixed;
+    top: 0;
+    left: -300px; /* Hide the sidebar off-screen */
+    width: 300px;
+    height: 100vh;
+    background-color: #1B1B1B;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: left 0.3s ease; /* Smooth transition */
+    z-index: 1000;
+    padding: 1rem;
+}
+
+/* Active state (visible) */
+.sidebarMenu.active {
+    left: 0; /* Slide into view */
+}
+
+#clickOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    opacity: 0.5;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+#sidebarMenu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    list-style: none; /* Removes Bullet Points */
+}
+
+.sideBarMenu-item{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: .5rem; /* 16px */
+    padding: 1rem;
+    border-radius: .5rem; /* 8px Radius */
+    transition: background-color .25s linear;
+}
+
+.sideBarMenu-item:hover {
+    background-color: #262626;
+}
+
+#sidebarMenu-themeToggle {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: .5rem;
+    border: 1px solid white;
+    border-radius: .5rem;
+}
+
+#sidebarMenu-themeToggle:hover {
+    cursor: pointer;
+}
+
+#sidebarMenu-logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+
+@media only screen and (min-width: 1024px) {
+    /* Disables Sidebar Menu For All Desktop Sized Screens */
+    .sidebarMenu {
+        display: none;
+    }
+}

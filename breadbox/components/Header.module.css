@@ -1,8 +1,20 @@
-#header {
+#headerContainer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 1rem;
+}
+
+#test {
+    position: fixed; /* Required So The Menu Scrolls With Screen */
+    background-color: white;
+}
+
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 #logo {
@@ -15,5 +27,55 @@
     #logo span {
         font-size: 1rem;
         font-weight: 700;
+    }
+
+    #desktopNav {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 1025px) {
+    #header {
+        max-width: 82rem;
+    }
+
+    /* Displays Desktop Menu Options */
+    #desktopNav {
+        display: block;
+    }
+
+    /* Display Of Mobile Icon Set To None */
+    #mobileIcon {
+        display: none;
+    }
+
+    #desktopNavList {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        justify-content: center;
+        list-style: none;
+    }
+
+    .navItem:hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+}
+
+@media only screen and (max-width: 639px) {
+    #headerContainer {
+        padding: 1.5rem;
+    }
+
+    /* Enables The Mobile Menu. */
+    #desktopNav {
+        display: none;
+    }
+
+    #mobileIcon {
+        display: block;
+        width: 24px;
+        height: 24px;
     }
 }
