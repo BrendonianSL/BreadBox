@@ -1,19 +1,19 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import Header from '../components/Header';
 import ContentSpace from '../components/ContentSpace';
-import { useEffect } from 'react';
-import SidebarMenu from '../components/SidebarMenu';
+import { Routes, Route } from 'react-router-dom';
+import HomePage from '../components/HomePage';
+import Article from '../components/Article';
+
 function App() {
 
   return (
     <>
       <Header />
-      <ContentSpace />
+      <ContentSpace>
+      </ContentSpace>
     </>
   )
 }
 
-export default App
+export default App;

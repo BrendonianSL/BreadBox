@@ -1,8 +1,12 @@
 #headerContainer {
+    position: sticky;
+    top: 0;
+    left: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem;
+    background-color: #1B1B1B;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 #test {
@@ -15,6 +19,7 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    max-width: 80rem;
 }
 
 #logo {
@@ -23,18 +28,12 @@
     gap: 1rem;
 }
 
-@media only screen and (min-width: 768px) {
-    #logo span {
-        font-size: 1rem;
-        font-weight: 700;
-    }
-
-    #desktopNav {
-        display: none;
-    }
+#mobileIcon {
+    width: 24px;
+    height: 24px;
 }
 
-@media only screen and (min-width: 1025px) {
+@media only screen and (min-width: 1024px) {
     #header {
         max-width: 82rem;
     }
@@ -62,10 +61,35 @@
         text-decoration: underline;
     }
 }
-
-@media only screen and (max-width: 639px) {
+@media only screen and (min-width: 1024px) {
     #headerContainer {
-        padding: 1.5rem;
+        height: 4.063rem;
+        padding: 0rem 4rem;
+    }
+}
+
+@media only screen and (min-width: 641px) and (max-width: 1023px) {
+    #headerContainer {
+        height: 4.063rem;
+    }
+
+    #header {
+        padding:  0rem 2.25rem;
+    }
+
+    #desktopNav {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    #headerContainer {
+        height: 4.063rem;
+        padding:  0rem 1.5rem;
+    }
+
+    #header {
+        padding: 4.063 1.5rem;
     }
 
     /* Enables The Mobile Menu. */
