@@ -9,7 +9,8 @@ export default function ContentSpace() {
         <section id={styles.contentSpace}>
             <Routes>
                 <Route path='/' element={<HomePage />} />
-                <Route path='/articles/:articleName' element={<Article />} />
+                <Route path='/reviews' element={<ArticleList />} />
+                <Route path='/reviews/:reviewName' element={<Article />} />
             </Routes>
         </section>
     )

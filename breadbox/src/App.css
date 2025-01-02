@@ -7,8 +7,10 @@
 #root {
   display: flex;
   position: relative;
+  gap: 2rem;
   flex-direction: column;
   width: 100%;
+  height: 100%;
   max-width: 100vw;
   overflow: visible;
 }

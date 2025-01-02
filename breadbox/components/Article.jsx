@@ -4,16 +4,20 @@ import { useEffect, useState } from 'react';
 
 export default function Article() {
 
+    //Variable To Hold The Endpoint That We Will Be Fetching From.
+    const endpoint = `http://localhost:3000${window.location.pathname}`;
+
+    console.log(window.location.pathname);
     //Sets The State Of The Component.
     const [articleInformation, setArticleInformation] = useState(null);
 
-    //Use Effect Running On Mount.
+    //Use Effect Running On Mount. Fetches Specified Article.
     useEffect(() => {
         //Async Function Responsible For Fetching Article Information.
         async function fetchArticleInformation() {
             try {
                 //Creates A Variable To Hold The Response.
-                const response = await fetch(`http://localhost:3000${window.location.pathname}`);
+                const response = await fetch(endpoint);
 
                 //Checks If The Response Is Ok!
                 if (!response.ok) {
@@ -25,7 +29,6 @@ export default function Article() {
 
                 const article = data[0];
 
-                console.log(JSON.stringify(article));
                 //Sets The State Of The Component.
                 setArticleInformation(article);
 

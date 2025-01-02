@@ -3,8 +3,10 @@ import express from 'express';
 import cors from 'cors';
 import pool from './db.js';
 
-//Imported Article Router.
-import articleRouter from './articleRoutes.js';
+//Imports Reviews Router & News Router.
+import reviewsRouter from './reviewsRouter.js';
+import newsRouter from './newsRouter.js';
+
 
 //Initializes Express App & Defines The Port.
 const app = express();
@@ -13,11 +15,14 @@ const port = '3000';
 //Uses Cross Origin Resource Sharing For ALL ROUTES. Needed During Development Phase.
 app.use(cors());
 
-//Defines A Middleware To Catch All Article Based Requests.
-app.use('/articles', articleRouter);
+//Defines A Middleware To Catch All Review Based Requests.
+app.use('/reviews', reviewsRouter);
 
+//Defines A Middleware To Catch All News Based Requests.
+app.use('/news', newsRouter);
+
+//Handles All Request To The Homepage.
 app.get('/', async (req, res) => {
-    console.log('Home Page Receieved');
     try {
         //Queries The Database For All Articles.
         const response = await pool.query(`
