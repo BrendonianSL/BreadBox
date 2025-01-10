@@ -5,9 +5,9 @@
     justify-content: flex-start;
     align-items: center;
     width: 100%;
-    height: auto;
+    height: 100%;
     overflow: hidden;
-    cursor: pointer;
+    max-width: 90rem;
 }
 
 #heroSection {
@@ -75,7 +75,13 @@
 
 .content-carousel_card {
     flex-shrink: 0; /* Prevents cards from shrinking */
-    width: 17.625rem; /* 282 px */
+    width: 20.625rem; /* 282 px */
+    color: white;
+}
+
+.content-carousel_card:hover {
+    cursor: pointer;
+    color: #A259FF;
 }
 
 .content-carousel_card img {
@@ -88,20 +94,28 @@
 }
 
 
-@media only screen and (min-width: 1281px) {
+@media only screen and (min-width: 1024px) {
     #homePageContainer {
-        max-width: 75rem; /* 1200px */
         gap: 5.125rem; /* 82px */
+        padding: 0rem 4rem;
     }
 }
 
-@media only screen and (min-width: 1025px) and (max-width: 1280px) {
+@media only screen and (min-width: 641px) and (max-width: 1023px) {
     #homePageContainer {
         max-width: 1000px;
     }
+
+    #heroImage, #heroOverlay {
+        border-radius: 0rem;
+    }
+
+    .content-carousel_container {
+        padding: 0rem 1.5rem;
+    }
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 640px) {
     #homePageContainer {
         max-width: 928px;
     }

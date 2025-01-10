@@ -1,15 +1,18 @@
 import styles from './ArticleListItem.module.css';
+import { Link } from "react-router-dom";
 
-export default function ArticleListItem() {
+export default function ArticleListItem({ id, article }) {
     return (
-        <div className={styles['listItem']}>
-            <div className={styles['listItem-image_container']}>
-                <img className={styles['listItemThumbnail']} src="../src/assets/zzz.webp" alt="" />
+        <Link style={{ color: 'white' }} to={`${article.slug}`}>
+            <div className={styles['listItem']}>
+                <div className={styles['listItem-image_container']}>
+                    <img className={styles['listItemThumbnail']} src={article.thumbnail} alt={`Article Thumbnail For ${article.title}`} />
+                </div>
+                <div className={styles['listItem-details']}>
+                    <span className={styles['listItem-title']}>{article.title}</span>
+                    <summary className={styles['listItem-subtitle']}>{article.subtitle}</summary>
+                </div>
             </div>
-            <div className={styles['listItem-details']}>
-                <span>Zenless Zone Zero Review</span>
-                <summary>A simple yet deep experience that keeps the fun rolling!</summary>
-            </div>
-        </div>
+        </Link>
     )
 }

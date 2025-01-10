@@ -1,0 +1,78 @@
+#errorContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    max-width: 90rem;
+    width: 100%;
+}
+
+#errorContainer-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.errorContainer-button {
+    border: none;
+    background-color: #A259FF;
+    color: #FFF;
+    transition: all .1s linear;
+}
+
+.errorContainer-button:hover {
+    background-color: #FFF;
+    color: #A259FF;
+}
+
+.errorContainer-home_button {
+    font-size: 1.125rem;
+}
+
+@media only screen and (min-width: 1024px) {
+    #errorContainer {
+        padding: 0rem 4rem;
+    }
+
+    .errorContainer-type {
+        font-size: 2.5rem;
+    }
+
+    .errorContainer-message {
+        font-size: 1.375rem;
+    }
+}
+
+@media only screen and (min-width: 641px) and (max-width: 1023px) {
+    #errorContainer {
+        padding: 0rem 2.25rem;
+    }
+
+    .errorContainer-type {
+        font-size: 1.75rem;
+    }
+
+    .errorContainer-message {
+        font-size: 1.125rem;
+    }
+
+
+
+}
+
+@media only screen and (max-width: 640px) {
+    #errorContainer {
+        padding: 0rem 1.5rem;
+    }
+
+    .errorContainer-type {
+        font-size: 1.5rem;
+    }
+
+    .errorContainer-message {
+        font-size: 1rem;
+    }
+}

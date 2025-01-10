@@ -11,6 +11,8 @@ export default function ContentSpace() {
                 <Route path='/' element={<HomePage />} />
                 <Route path='/reviews' element={<ArticleList />} />
                 <Route path='/reviews/:reviewName' element={<Article />} />
+                <Route path='/news' element={<ArticleList />} />
+                <Route path='/news/:newsName' element={<Article />} />
             </Routes>
         </section>
     )

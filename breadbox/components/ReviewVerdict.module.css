@@ -14,3 +14,15 @@
     gap: 1rem;
     width: 100%;
 }
+
+#reviewVerdict-title {
+    font-size: 2.125rem; /* 64px */
+    font-weight: 600;
+}
+
+/* Mobile Sizing */
+@media only screen and (max-width: 640px) {
+    #reviewVerdict-title {
+        font-size: 1.875rem /* 34px */
+    }
+}

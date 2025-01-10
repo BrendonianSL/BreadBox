@@ -7,6 +7,7 @@
     justify-content: center;
     background-color: #1B1B1B;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    z-index: 1000;
 }
 
 #test {
@@ -19,7 +20,6 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    max-width: 80rem;
 }
 
 #logo {
@@ -35,7 +35,8 @@
 
 @media only screen and (min-width: 1024px) {
     #header {
-        max-width: 82rem;
+        max-width: 90rem;
+        padding: 0rem 4rem;
     }
 
     /* Displays Desktop Menu Options */
@@ -48,6 +49,10 @@
         display: none;
     }
 
+    #headerContainer {
+        height: 4.063rem;
+    }
+
     #desktopNavList {
         display: flex;
         gap: 2rem;
@@ -56,15 +61,18 @@
         list-style: none;
     }
 
+    #logoText {
+        font-weight: 700;
+    }
+
+    .navItem {
+        color: #FFF;
+    }
+
     .navItem:hover {
         cursor: pointer;
         text-decoration: underline;
-    }
-}
-@media only screen and (min-width: 1024px) {
-    #headerContainer {
-        height: 4.063rem;
-        padding: 0rem 4rem;
+        color: #A259FF;
     }
 }
 
@@ -74,7 +82,7 @@
     }
 
     #header {
-        padding:  0rem 2.25rem;
+        padding:  0rem 1rem;
     }
 
     #desktopNav {

@@ -1,91 +1,145 @@
 import styles from './Article.module.css';
+import Loader from './Loader';
 import ReviewVerdict from './ReviewVerdict';
+import Error from './Error';
 import { useEffect, useState } from 'react';
 
 export default function Article() {
-
-    //Variable To Hold The Endpoint That We Will Be Fetching From.
+    // Variable to hold the endpoint for fetching the article
     const endpoint = `http://localhost:3000${window.location.pathname}`;
 
-    console.log(window.location.pathname);
-    //Sets The State Of The Component.
+    // State for article data, error, and loading
     const [articleInformation, setArticleInformation] = useState(null);
+    const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-    //Use Effect Running On Mount. Fetches Specified Article.
+    // Fetch article information on mount
     useEffect(() => {
-        //Async Function Responsible For Fetching Article Information.
+        let isMounted = true;
+
         async function fetchArticleInformation() {
             try {
-                //Creates A Variable To Hold The Response.
                 const response = await fetch(endpoint);
 
-                //Checks If The Response Is Ok!
                 if (!response.ok) {
-                    throw new Error('Network Response Failed');
+                    const data = await response.json();
+                    throw new Error(
+                        JSON.stringify({
+                            status: response.status,
+                            message: data.message || 'Failed to fetch article.',
+                        })
+                    );
                 }
 
-                //Converts The Response To JSON.
                 const data = await response.json();
 
-                const article = data[0];
-
-                //Sets The State Of The Component.
-                setArticleInformation(article);
-
-
-            } catch (error) {
-                //Logs Any Error That We Come Across.
-                console.error(error);
+                if (isMounted) {
+                    setArticleInformation(data[0]); // Assuming data[0] contains the article
+                    setError(null); // Clear any previous errors
+                }
+            } catch (fetchError) {
+                console.error(fetchError);
+                if (isMounted) {
+                    setError(JSON.parse(fetchError.message));
+                }
+            } finally {
+                if (isMounted) {
+                    setIsLoading(false);
+                }
             }
         }
 
-        //Calls The Function Above.
         fetchArticleInformation();
-    }, []);
 
-    //If Article Information Isn't Present.
-    if(!articleInformation) {
-        return (
-            <h1>Loading Information.</h1>
-        )
+        return () => {
+            isMounted = false; // Cleanup on unmount
+        };
+    }, [endpoint]);
+
+    // Update the document title when article information is available
+    useEffect(() => {
+        if (articleInformation) {
+            document.title = articleInformation.title || 'Article';
+        }
+    }, [articleInformation]);
+
+    // Render the skeleton while loading
+    if (isLoading) {
+        return <Loader />;
     }
 
+    // Render the error component if there is an error
+    if (error) {
+        return <Error status={error.status} message={error.message} />;
+    }
+
+    // Render the article
     return (
         <article id={styles.article}>
             <div id={styles.articleHero}>
-                <img id={styles.image} src='../src/assets/zzz.webp' alt='' />
+                <img
+                    className={`${styles.image}`}
+                    src={`${articleInformation.thumbnail}`}
+                    alt={articleInformation.title || 'Article Thumbnail'}
+                />
                 <div id={styles.articleTitle}>
-                    <h1>{articleInformation['title']}</h1>
-                    <h4>{articleInformation.subtitle}</h4>
+                    <h1 id={styles['article-title']}>{articleInformation.title}</h1>
+                    <h4 id={styles['article-subtitle']}>{articleInformation.subtitle}</h4>
                 </div>
                 <div id={styles.articleAuthor}>
                     <div id={styles.articleMeta}>
                         <div id={styles.authorInfo}>
-                            <img id={styles.authorImage} src='../src/assets/brendan2.jpg' alt='' />
-                            <span>{articleInformation.author_name}</span>
+                            <img
+                                id={styles.authorImage}
+                                src={'../src/assets/brendan2.jpg'}
+                                alt={articleInformation.author_name}
+                            />
+                            <span className={styles['article-meta-text']}>
+                                {articleInformation.author_name}
+                            </span>
                         </div>
-                        <span>{articleInformation.created_at}</span>
+                        <span>{new Date(articleInformation.created_at).toLocaleDateString()}</span>
                     </div>
                     <div className={styles.divider}></div>
                 </div>
             </div>
             <div id={styles.articleContent}>
-                {articleInformation.content.content.map((element) => {
-                    return (
-                        <div>
-                            <h2>{element.subtitle}</h2>
-                            {element.paragraphs.map((paragraph) => {
-                                return (
-                                    <p>{paragraph}</p>
-                                )
-                            })}
+                {articleInformation.content.content.map((element, index) => (
+                    <div key={index} className={styles['articleContent-section']}>
+                        {(element.picture || element.subtitle) && (
+                            <div className={styles['articleContent-section_hero']}>
+                                {element.picture && (
+                                    <img
+                                        className={styles.image}
+                                        src={element.picture}
+                                        alt={element.subtitle || 'Content Image'}
+                                    />
+                                )}
+                                {element.subtitle && (
+                                    <h2 className={styles['article-subheading']}>
+                                        {element.subtitle}
+                                    </h2>
+                                )}
+                            </div>
+                        )}
+                        <div className={styles['articleContent-section_paragraphs']}>
+                            {element.paragraphs.map((paragraph, idx) => (
+                                <p key={idx} className={styles['article-paragraph']}>
+                                    {paragraph}
+                                    <br />
+                                    <br />
+                                </p>
+                            ))}
                         </div>
-                    )
-                })
-                }
-                </div>
-                <ReviewVerdict verdict={articleInformation.verdict} description={articleInformation.verdict_description} />
+                    </div>
+                ))}
+            </div>
+            {endpoint.includes('reviews') && (
+                <ReviewVerdict
+                    verdict={articleInformation.verdict}
+                    description={articleInformation.verdict_description}
+                />
+            )}
         </article>
-    )
-} 
-
+    );
+}
