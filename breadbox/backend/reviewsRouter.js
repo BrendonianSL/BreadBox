@@ -1,98 +1,88 @@
 import express from 'express';
-import pool from './db.js';
-import { resolvePath } from 'react-router';
 
-//Creates A New Router.
+// Creates A New Router
 const reviewsRouter = express.Router();
 
-//Handles Routes To The /Articles Page.
+// Handles Routes To The /Reviews Page
 reviewsRouter.get('/', async (req, res) => {
     try {
-        //Queries The Database For All Reviews.
-        const response = await pool.query(`
-            SELECT 
-            reviews.id AS review_id,
-            title,
-            subtitle,
-            article_image AS thumbnail,
-            article_slug AS slug
-            FROM reviews LIMIT 5;
-        `);
+        const { data, error } = await req.supabase
+        .from('reviews')
+        .select('id, title, subtitle, article_image, article_slug')
+        .limit(5);
 
-        //Sends The Response To The Client With A Successful Status Code.
-        res.status(200).json(response.rows);
+        console.log(data);
+        if (error) {
+            throw error;
+        }
 
-    } catch(error) {
-        //Logs The Error To The Console.
+        res.status(200).json(data);
+    } catch (error) {
         console.error(error);
-
-        //Sends An Error Back To The Client With A 500 Status Code.
         res.status(500).send('Server Error. The Server Does Not Know How To Handle This Request. Please Try Again.');
     }
 });
 
-//Routes To Fetch The Most Recent Article.
+// Handles Routes To Fetch The Most Recent Reviews
 reviewsRouter.get('/recent', async (req, res) => {
     try {
-        const response = await pool.query(`
-            SELECT
-            reviews.id AS review_id,
-            reviews.title,
-            reviews.article_image AS thumbnail,
-            reviews.article_slug AS slug
-            FROM reviews
-            ORDER BY created_at DESC
-            LIMIT 4;
-          `);
+        const { data, error } = await req.supabase
+            .from('reviews')
+            .select('id, title, article_image, article_slug')
+            .order('created_at', { ascending: false })
+            .limit(4);
 
-          //If Successful, Return A Response With A Successful Status Code.
-          res.status(200).json({status: 200, data: response.rows});
-    } catch (error) {
-        //Logs The Error To The Console.
-        console.error(error);
-    }
-});
-
-//Handles Routes For Specific Review Articles.
-reviewsRouter.get('/:reviewName', async (req, res) => {
-    try {
-        //Grabs The Article Name From The Parameters.
-        const reviewName = req.params.reviewName;
-
-        //Queries The Database For The Article Slug.
-        const response = await pool.query(`SELECT
-            reviews.id AS review_id,
-            reviews.title,
-            reviews.subtitle,
-            reviews.content,
-            reviews.verdict_description,
-            reviews.article_image AS thumbnail,
-            authors.name AS author_name,
-            review_verdicts.verdict
-            FROM reviews
-            JOIN 
-            authors ON reviews.author_id = authors.id
-            JOIN 
-            review_verdicts ON reviews.review_verdict = review_verdicts.id
-            WHERE article_slug = $1;
-        `, [reviewName]);
-
-        //Checks The Reseponse For Empty Rows
-        if (response.rows.length === 0) {
-            return res.status(404).json({ status: 404, message: 'Review Not Found' });
+        if (error) {
+            throw error;
         }
 
-        //If Successful, Returns A Response With A Successful Status Code.
-        res.status(200).json(response.rows);
+        if (data.length === 0) {
+            return res.status(404).json({ status: 404, message: 'Failed To Fetch Recent Reviews.' });
+        }
 
+        res.status(200).json({ status: 200, data });
     } catch (error) {
-        //Logs Error To The Console.
         console.error(error);
-
-        //Sends An Error Back To The Client With A 500 Status Code.
         res.status(500).send('Server Error');
     }
 });
 
-//Exports The Router After The Creation Of All Routes.
+// Handles Routes For A Specific Review Article
+reviewsRouter.get('/:reviewName', async (req, res) => {
+    try {
+        const reviewName = req.params.reviewName;
+
+        const { data, error } = await req.supabase
+            .from('reviews')
+            .select(`
+                id, 
+                title, 
+                subtitle, 
+                content, 
+                verdict_description, 
+                article_image, 
+                authors(name), 
+                review_verdicts(verdict)
+            `)
+            .eq('article_slug', reviewName)
+            .single(); // Ensure you fetch only one record
+    
+        if (error) {
+            throw error;
+        }
+
+        if (!data) {
+            return res.status(404).json({ status: 404, message: 'Review Not Found.' });
+        }
+
+        console.log("success");
+        res.status(200).json(data);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Server Error. The Server Does Not Know How To Handle This Request. Please Try Again.');
+    }
+});
+
+
+// Exports the router
 export default reviewsRouter;

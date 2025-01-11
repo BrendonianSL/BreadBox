@@ -34,7 +34,7 @@ export default function Article() {
                 const data = await response.json();
 
                 if (isMounted) {
-                    setArticleInformation(data[0]); // Assuming data[0] contains the article
+                    setArticleInformation(data); // Assuming data[0] contains the article
                     setError(null); // Clear any previous errors
                 }
             } catch (fetchError) {
@@ -79,7 +79,7 @@ export default function Article() {
             <div id={styles.articleHero}>
                 <img
                     className={`${styles.image}`}
-                    src={`${articleInformation.thumbnail}`}
+                    src={`${articleInformation.article_image}`}
                     alt={articleInformation.title || 'Article Thumbnail'}
                 />
                 <div id={styles.articleTitle}>
@@ -92,13 +92,12 @@ export default function Article() {
                             <img
                                 id={styles.authorImage}
                                 src={'../src/assets/brendan2.jpg'}
-                                alt={articleInformation.author_name}
+                                alt={articleInformation.authors.name + 's Image.'}
                             />
                             <span className={styles['article-meta-text']}>
-                                {articleInformation.author_name}
+                                {articleInformation.authors.name}
                             </span>
                         </div>
-                        <span>{new Date(articleInformation.created_at).toLocaleDateString()}</span>
                     </div>
                     <div className={styles.divider}></div>
                 </div>

@@ -1,95 +1,83 @@
 import express from 'express';
-import pool from './db.js';
 
-//Creates A New Router.
+// Creates A New Router
 const newsRouter = express.Router();
 
-//Handles Routes To The /News Page.
+// Handles Routes To The /News Page
 newsRouter.get('/', async (req, res) => {
     try {
-        //Creates A Variable To Hold Database Response.
-        const queryResponse = await pool.query(`
-            SELECT 
-            id AS id,
-            title,
-            subtitle,
-            article_image AS thumbnail,
-            article_slug AS slug
-            FROM news LIMIT 5;`);
+        const { data, error } = await req.supabase
+            .from('news')
+            .select('id, title, subtitle, article_image, article_slug')
+            .limit(5);
 
-        //If Successful, Returns A Response With A Successful Status Code.
-        res.status(200).json(queryResponse.rows);
+        if (error) {
+            throw error;
+        }
 
+        res.status(200).json(data);
     } catch (error) {
-        //Logs The Error To The Console.
         console.error(error);
-
-        //Sends An Error Back To The Client With A Error Status Code.
         res.status(500).send('Server Error. The Server Does Not Know How To Handle This Request. Please Try Again.');
     }
 });
 
-//Handles Routes To Grab The Most Recent News.
+// Handles Routes To Grab The Most Recent News
 newsRouter.get('/recent', async (req, res) => {
     try {
-        const response = await pool.query(`
-            SELECT
-            id AS news_id,
-            title,
-            article_image AS thumbnail,
-            article_slug AS slug
-            FROM news
-            ORDER BY created_at DESC
-            LIMIT 4;
-            `);    
+        const { data, error } = await req.supabase
+            .from('news')
+            .select('id, title, article_image, article_slug')
+            .order('created_at', { ascending: false })
+            .limit(4);
 
-        if(response.rows.length === 0) {
-            res.status(404).json({status: 404, message: 'Failed To Fetch Recent News.'});
+        if (error) {
+            throw error;
         }
 
-        //If Both Checks Pass, Returns A Response With A Successful Status Code.
-        res.status(200).json({status: 200, data: response.rows});
+        if (data.length === 0) {
+            return res.status(404).json({ status: 404, message: 'Failed To Fetch Recent News.' });
+        }
+
+        res.status(200).json({ status: 200, data });
     } catch (error) {
-        //Logs The Error To The Console.
         console.error(error);
+        res.status(500).send('Server Error');
     }
 });
 
-//Handles Routes For A Specific News Article.
+// Handles Routes For A Specific News Article
 newsRouter.get('/:newsName', async (req, res) => {
     try {
-        //Grabs The Article Name From The Parameters
         const newsName = req.params.newsName;
 
-        //Queries The Database For The Article Slug.
-        const queryResponse = await pool.query(`SELECT
-            news.id AS news_id,
-            news.title,
-            news.subtitle,
-            news.content,
-            news.article_image AS thumbnail,
-            authors.name AS author_name
-            FROM news
-            JOIN authors ON news.author_id = authors.id
-            WHERE article_slug = $1;
-            `, [newsName]);
+        const { data, error } = await req.supabase
+            .from('news')
+            .select(`
+                id, 
+                title, 
+                subtitle, 
+                content, 
+                article_image, 
+                authors(name)
+            `)
+            .eq('article_slug', newsName)
+            .single(); // Ensure you fetch only one record
 
-        //Checks The Reseponse For Empty Rows
-        if (queryResponse.rows.length === 0) {
+        if (error) {
+            throw error;
+        }
+
+        if (!data) {
             return res.status(404).json({ status: 404, message: 'News Article Not Found.' });
         }
 
-        //If Successful, Returns A Response With A Successful Status Code.
-        res.status(200).json(queryResponse.rows);
-    } catch(error) {
-        //Logs The Error To The Console.
+        res.status(200).json(data);
+    } catch (error) {
         console.error(error);
-
-        //Sends An Error Back To The Client With A Error Status Code.
         res.status(500).send('Server Error. The Server Does Not Know How To Handle This Request. Please Try Again.');
     }
 });
 
-//Exports The Router After The Creation Of All Routes.
+// Exports the router
 export default newsRouter;
-

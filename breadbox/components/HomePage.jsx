@@ -84,7 +84,7 @@ export default function HomePage() {
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >
-                <img id={styles.heroImage} src={recentReviews[0].thumbnail} alt='Hero Image' />
+                <img id={styles.heroImage} src={recentReviews[0].article_image} alt='Hero Image' />
                 <div id={styles.heroOverlay} className={isHovered ? styles.show : ''}>
                     <summary>{recentReviews[0].title}</summary>
                     <span id={styles.test}>Check Out This Recent Article!</span>
@@ -99,7 +99,7 @@ export default function HomePage() {
                             className={styles['content-carousel_card']}
                             key={review.id}
                         >
-                            <img src={`${review.thumbnail}`} alt={review.title} />
+                            <img src={`${review.article_image}`} alt={review.title} />
                             <div>
                                 <span>REVIEW</span>
                                 <summary>{review.title}</summary>
@@ -117,7 +117,7 @@ export default function HomePage() {
                             className={styles['content-carousel_card']}
                             key={news.id}
                         >
-                            <img src={`${news.thumbnail}`} alt={news.title} />
+                            <img src={`${news.article_image}`} alt={news.title} />
                             <div>
                                 <span>NEWS</span>
                                 <summary>{news.title}</summary>
