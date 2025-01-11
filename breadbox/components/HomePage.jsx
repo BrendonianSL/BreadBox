@@ -17,8 +17,8 @@ export default function HomePage() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const reviewEndpoint = 'http://localhost:3000/reviews/recent';
-    const newsEndpoint = 'http://localhost:3000/news/recent';
+    const reviewEndpoint = 'https://bulppyqiumueqqyekrbl.supabase.co/rest/v1/reviews/recent';
+    const newsEndpoint = 'https://bulppyqiumueqqyekrbl.supabase.co/rest/v1/news/recent';
 
     useEffect(() => {
         let isMounted = true;
@@ -27,8 +27,18 @@ export default function HomePage() {
             try {
                 // Initiate both fetches with Promise.all
                 const [reviewResponse, newsResponse] = await Promise.all([
-                    fetch(reviewEndpoint),
-                    fetch(newsEndpoint),
+                    fetch(reviewEndpoint, {
+                        headers: {
+                            'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY}`,
+                            'apikey': `${process.env.SUPABASE_ANON_KEY}`,
+                        }
+                    }),
+                    fetch(newsEndpoint, {
+                        headers: {
+                            'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY}`,
+                            'apikey': `${process.env.SUPABASE_ANON_KEY}`,
+                        }
+                    }),
                 ]);
 
                 // Check for errors in responses

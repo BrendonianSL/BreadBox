@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 export default function Article() {
     // Variable to hold the endpoint for fetching the article
-    const endpoint = `http://localhost:3000${window.location.pathname}`;
+    const endpoint = `https://bulppyqiumueqqyekrbl.supabase.co/rest/v1${window.location.pathname}`;
 
     // State for article data, error, and loading
     const [articleInformation, setArticleInformation] = useState(null);
@@ -19,7 +19,12 @@ export default function Article() {
 
         async function fetchArticleInformation() {
             try {
-                const response = await fetch(endpoint);
+                const response = await fetch(endpoint, {
+                    headers: {
+                        'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY}`,
+                        'apikey': `${process.env.SUPABASE_ANON_KEY}`,
+                    }
+                });
 
                 if (!response.ok) {
                     const data = await response.json();

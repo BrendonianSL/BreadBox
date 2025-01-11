@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 /* This Component Is For Generating A List Of Reviews Or News */
 export default function ArticleList() {
     // Determine the endpoint dynamically based on the current pathname.
-    const endpoint = `http://localhost:3000${window.location.pathname}`;
+    const endpoint = `https://bulppyqiumueqqyekrbl.supabase.co/rest/v1${window.location.pathname}`;
 
     // Set the document title dynamically.
     if (endpoint.includes('reviews')) {
@@ -27,7 +27,12 @@ export default function ArticleList() {
         async function fetchArticles() {
             setIsLoading(true);
             try {
-                const response = await fetch(endpoint);
+                const response = await fetch(endpoint, {
+                    headers: {
+                        'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY}`,
+                        'apikey': `${process.env.SUPABASE_ANON_KEY}`,
+                    }
+                });
 
                 if (!response.ok) {
                     throw new Error(`Failed to fetch articles: ${response.statusText}`);
