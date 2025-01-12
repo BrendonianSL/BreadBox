@@ -89,7 +89,7 @@ export default function HomePage() {
     // Show homepage content when data is loaded successfully
     return (
         <section id={styles.homePageContainer}>
-            <div
+            <Link
                 id={styles.heroSection}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
@@ -98,7 +98,7 @@ export default function HomePage() {
                 <div id={styles.heroOverlay} className={isHovered ? styles.show : ''}>
                     <summary>{recentReviews[0].title}</summary>
                     <span id={styles.test}>Check Out This Recent Article!</span>
-                </div>
+                </Link>
             </div>
             <div className={styles['content-carousel_container']}>
                 <h2>Latest Reviews</h2>
