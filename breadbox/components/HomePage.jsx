@@ -105,7 +105,7 @@ export default function HomePage() {
                 <div className={styles['content-carousel']}>
                     {recentReviews.map((review) => (
                         <Link
-                            to={`/reviews/${review.slug}`}
+                            to={`/reviews/${review.article_slug}`}
                             className={styles['content-carousel_card']}
                             key={review.id}
                         >
