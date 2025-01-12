@@ -89,7 +89,7 @@ export default function HomePage() {
     // Show homepage content when data is loaded successfully
     return (
         <section id={styles.homePageContainer}>
-            <Link id={styles.heroSection} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            <Link to={`reviews/${recentReviews[0].article_slug}`} id={styles.heroSection} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                 <img id={styles.heroImage} src={recentReviews[0].article_image} alt='Hero Image' />
                 <div id={styles.heroOverlay} className={isHovered ? styles.show : ''}>
                     <summary>{recentReviews[0].title}</summary>
