@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: breadbox
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    instanceCount: 1
