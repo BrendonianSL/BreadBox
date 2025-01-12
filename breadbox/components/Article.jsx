@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 export default function Article() {
     // Variable to hold the endpoint for fetching the article
-    const endpoint = `https://bulppyqiumueqqyekrbl.supabase.co/rest/v1${window.location.pathname}`;
+    const endpoint = `https://breadbox-backend.onrender.com${window.location.pathname}`;
 
     // State for article data, error, and loading
     const [articleInformation, setArticleInformation] = useState(null);

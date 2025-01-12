@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 /* This Component Is For Generating A List Of Reviews Or News */
 export default function ArticleList() {
     // Determine the endpoint dynamically based on the current pathname.
-    const endpoint = `https://bulppyqiumueqqyekrbl.supabase.co/rest/v1${window.location.pathname}`;
+    const endpoint = `https://breadbox-backend.onrender.com${window.location.pathname}`;
 
     // Set the document title dynamically.
     if (endpoint.includes('reviews')) {

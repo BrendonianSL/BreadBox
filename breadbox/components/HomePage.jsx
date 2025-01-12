@@ -17,8 +17,8 @@ export default function HomePage() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const reviewEndpoint = 'https://bulppyqiumueqqyekrbl.supabase.co/rest/v1/reviews/recent';
-    const newsEndpoint = 'https://bulppyqiumueqqyekrbl.supabase.co/rest/v1/news/recent';
+    const reviewEndpoint = 'https://breadbox-backend.onrender.com/reviews/recent';
+    const newsEndpoint = 'https://breadbox-backend.onrender.com/news/recent';
 
     useEffect(() => {
         let isMounted = true;
