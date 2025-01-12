@@ -14,6 +14,7 @@
     display: flex;
     position: relative; /* Required For Overlay */
     width: 100%;
+    color: '#FFF';
 }
 
 #heroSection:hover #test {
